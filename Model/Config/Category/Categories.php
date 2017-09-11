@@ -1,4 +1,5 @@
 <?php
+
 namespace Funk\SbzImport\Model\Config\Category;
 
 class Categories implements \Magento\Framework\Option\ArrayInterface
@@ -6,7 +7,8 @@ class Categories implements \Magento\Framework\Option\ArrayInterface
     protected $_categoryHelper;
     protected $_categoryFlatConfig;
 
-    function __construct(\Magento\Catalog\Helper\Category $categoryHelper, \Magento\Catalog\Model\Indexer\Category\Flat\State $categoryFlatState) {
+    function __construct(\Magento\Catalog\Helper\Category $categoryHelper, \Magento\Catalog\Model\Indexer\Category\Flat\State $categoryFlatState)
+    {
         $this->_categoryHelper = $categoryHelper;
         $this->_categoryFlatConfig = $categoryFlatState;
     }
@@ -17,18 +19,20 @@ class Categories implements \Magento\Framework\Option\ArrayInterface
         return $categories;
     }
 
-    public function getListCatOfStore() {
-        $categories = $this->getStoreCategories(true,false,true);
+    public function getListCatOfStore()
+    {
+        $categories = $this->getStoreCategories(true, false, true);
         $data = $this->_processArrData($categories);
         return $data;
     }
 
-    private function _processArrData($categories, $data = []) {
-        foreach ($categories as $category){
+    private function _processArrData($categories, $data = [])
+    {
+        foreach ($categories as $category) {
             $cat_name = $category->getName();
 
             $cat_id = $category->getId();
-            $_value = ['value' => $cat_id, 'label'=> __($cat_name)];
+            $_value = ['value' => $cat_id, 'label' => __($cat_name)];
             // load cat children
             if ($childrenCategories = $this->getChildCategories($category)) {
 
@@ -40,6 +44,7 @@ class Categories implements \Magento\Framework\Option\ArrayInterface
 
         return $data;
     }
+
     /**
      * @param bool $sorted
      * @param bool $asCollection
@@ -49,7 +54,7 @@ class Categories implements \Magento\Framework\Option\ArrayInterface
      */
     protected function getStoreCategories($sorted = false, $asCollection = false, $toLoad = true)
     {
-        return $this->_categoryHelper->getStoreCategories($sorted , $asCollection, $toLoad);
+        return $this->_categoryHelper->getStoreCategories($sorted, $asCollection, $toLoad);
     }
 
     /**

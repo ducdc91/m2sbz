@@ -11,6 +11,7 @@ class Collection extends AbstractCollection
      * @var string
      */
     protected $_idFieldName = 'id';
+
     /**
      * Remittance File Collection Constructor
      * @return void

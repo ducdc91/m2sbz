@@ -7,6 +7,7 @@
  * @copyright Copyright 2014 FunkExtensions.
  * @version: 0.1.0
  */
+
 namespace Funk\SbzImport\Model\Import\Adapter;
 
 class Config
@@ -15,10 +16,10 @@ class Config
     protected $_entityTypeId;
     protected $_attributeCodes;
     protected $_beforeProcessCallback;
-    protected $_canCreateNewEntity  = true;
-    protected $_canCreateOptions    = true;
+    protected $_canCreateNewEntity = true;
+    protected $_canCreateOptions = true;
     protected $_canCreateCategories = true;
-    protected $_canDownloadMedia    = true;
+    protected $_canDownloadMedia = true;
     protected $_websiteCollection;
     protected $_websites;
     protected $_stores;
@@ -33,38 +34,40 @@ class Config
     public function __construct(array $attributeCodes
     )
     {
-          $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-          if (empty($attributeCodes)) {
-              throw new \Funk\SbzImport\Model\Import\Adapter\Exception(
-                  Mage::helper('funkextensions_supplierconnect')->__('Please specify attributes.'));
-          }
-          $this->_attributeCodes = $attributeCodes;
-          //1 get connection db of magento
-           $resource = $objectManager->create('\Magento\Framework\App\ResourceConnection');
-          $this->_resource           = $resource;
-          $this->_resourceConnection = $resource->getConnection(\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION);
-          // get website collection
-          $websiteCollection = $objectManager->create('Magento\Store\Model\ResourceModel\Website\Collection');
-          $this->_websiteCollection = $websiteCollection;
-          // assign default wesbite to config
-          foreach ($websiteCollection as $website) {
-              /** @var $website Mage_Core_Model_Website */
-              $this->_websites[$website->getCode()] = $website->getId();
-              if ($website->getIsDefault()) {
-                  $this->_defaultWebsiteId = $website->getId();
-              }
-          }
-          // assign store id to config ;
-          $storeCollection =$objectManager->create('Magento\Store\Model\ResourceModel\Store\Collection');
-          foreach ($storeCollection as $store) {
-          /** @var $store Mage_Core_Model_Store */
-          $this->_stores[$store->getCode()] = $store->getId();
-          }
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        if (empty($attributeCodes)) {
+            throw new \Funk\SbzImport\Model\Import\Adapter\Exception(
+                Mage::helper('funkextensions_supplierconnect')->__('Please specify attributes.'));
+        }
+        $this->_attributeCodes = $attributeCodes;
+        //1 get connection db of magento
+        $resource = $objectManager->create('\Magento\Framework\App\ResourceConnection');
+        $this->_resource = $resource;
+        $this->_resourceConnection = $resource->getConnection(\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION);
+        // get website collection
+        $websiteCollection = $objectManager->create('Magento\Store\Model\ResourceModel\Website\Collection');
+        $this->_websiteCollection = $websiteCollection;
+        // assign default wesbite to config
+        foreach ($websiteCollection as $website) {
+            /** @var $website Mage_Core_Model_Website */
+            $this->_websites[$website->getCode()] = $website->getId();
+            if ($website->getIsDefault()) {
+                $this->_defaultWebsiteId = $website->getId();
+            }
+        }
+        // assign store id to config ;
+        $storeCollection = $objectManager->create('Magento\Store\Model\ResourceModel\Store\Collection');
+        foreach ($storeCollection as $store) {
+            /** @var $store Mage_Core_Model_Store */
+            $this->_stores[$store->getCode()] = $store->getId();
+        }
     }
+
     public function getHelper()
     {
         return \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Core\Helper\Data');
     }
+
     public function getResource()
     {
         return $this->_resource;
@@ -74,20 +77,24 @@ class Config
     {
         return $this->_resourceConnection;
     }
+
     public function getAttributeCodes()
     {
         return $this->_attributeCodes;
     }
+
     public function setEntityTypeId($entityTypeId)
     {
         $this->_entityTypeId = $entityTypeId;
 
         return $this;
     }
+
     public function getEntityTypeId()
     {
         return $this->_entityTypeId;
     }
+
     /**
      * Setting function which will be called before row processing
      *
@@ -116,7 +123,7 @@ class Config
      */
     public function setCanCreateNewEntity($flag)
     {
-        $this->_canCreateNewEntity = (bool) $flag;
+        $this->_canCreateNewEntity = (bool)$flag;
 
         return $this;
     }
@@ -135,7 +142,7 @@ class Config
      */
     public function setCanCreateOptions($flag)
     {
-        $this->_canCreateOptions = (bool) $flag;
+        $this->_canCreateOptions = (bool)$flag;
         return $this;
     }
 
@@ -153,7 +160,7 @@ class Config
      */
     public function setCanCreateCategories($flag)
     {
-        $this->_canCreateCategories = (bool) $flag;
+        $this->_canCreateCategories = (bool)$flag;
         return $this;
     }
 
@@ -164,16 +171,18 @@ class Config
     {
         return $this->_canCreateCategories;
     }
+
     /**
      * @param bool $flag
      * @return $this
      */
     public function setCanDownloadMedia($flag)
     {
-        $this->_canDownloadMedia = (bool) $flag;
+        $this->_canDownloadMedia = (bool)$flag;
 
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -218,19 +227,20 @@ class Config
     {
         return $this->_defaultWebsiteId;
     }
+
     /**
      * @return Mage_Core_Model_Store
      */
     public function getStore()
     {
         if (is_null($this->_store)) {
-              $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-              $storeFactory = $objectManager->create('Magento\Store\Model\StoreFactory')->create();
-              $store = $storeFactory->load($this->_storeId);
-              if (is_null($store->getId())) {
-                  $store = $this->getDefaultWebsite()->getDefaultStore();
-              }
-              $this->_store = $store;
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $storeFactory = $objectManager->create('Magento\Store\Model\StoreFactory')->create();
+            $store = $storeFactory->load($this->_storeId);
+            if (is_null($store->getId())) {
+                $store = $this->getDefaultWebsite()->getDefaultStore();
+            }
+            $this->_store = $store;
         }
         return $this->_store;
     }
@@ -249,7 +259,7 @@ class Config
      */
     public function setOptionCorrectionFactor($factor)
     {
-        $this->_optionCorrectionFactor = (int) $factor;
+        $this->_optionCorrectionFactor = (int)$factor;
         return $this;
     }
 

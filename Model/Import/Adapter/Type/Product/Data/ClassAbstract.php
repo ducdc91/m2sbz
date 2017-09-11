@@ -29,42 +29,54 @@ abstract class ClassAbstract
     static $READCONNECTION;
     static $WRITECONNECTION;
 
-    final public function __construct(\Funk\SbzImport\Model\Import\Adapter\Type\Product\Product $adapter) {
-            if(!isset(self::$ADAPTER)){
-                self::$ADAPTER          = $adapter;
-                self::$CONFIG           = $adapter->getConfig();
-                self::$RESOURCE         = self::$CONFIG->getResource();
-                self::$WEBSITE          = self::$CONFIG->getWebsite();
-                self::$STORE            = self::$CONFIG->getStore();
-                self::$READCONNECTION   = self::$CONFIG->getResourceConnection();
-                self::$WRITECONNECTION  = self::$CONFIG->getResourceConnection();
-            }
-            $this->_adapter          = self::$ADAPTER ;
-            $this->_config           = self::$CONFIG ;
-            $this->_resource         = self::$RESOURCE ;
-            $this->_website          = self::$WEBSITE ;
-            $this->_store            = self::$STORE ;
-            $this->_readConnection   = self::$READCONNECTION ;
-            $this->_writeConnection  = self::$WRITECONNECTION ;
-            $this->_construct();
-      }
-    protected function _construct() {
-          return $this;
+    final public function __construct(\Funk\SbzImport\Model\Import\Adapter\Type\Product\Product $adapter)
+    {
+        if (!isset(self::$ADAPTER)) {
+            self::$ADAPTER = $adapter;
+            self::$CONFIG = $adapter->getConfig();
+            self::$RESOURCE = self::$CONFIG->getResource();
+            self::$WEBSITE = self::$CONFIG->getWebsite();
+            self::$STORE = self::$CONFIG->getStore();
+            self::$READCONNECTION = self::$CONFIG->getResourceConnection();
+            self::$WRITECONNECTION = self::$CONFIG->getResourceConnection();
+        }
+        $this->_adapter = self::$ADAPTER;
+        $this->_config = self::$CONFIG;
+        $this->_resource = self::$RESOURCE;
+        $this->_website = self::$WEBSITE;
+        $this->_store = self::$STORE;
+        $this->_readConnection = self::$READCONNECTION;
+        $this->_writeConnection = self::$WRITECONNECTION;
+        $this->_construct();
     }
 
-    protected function _throwException($message, $code = 0, Exception $previous = null) {
+    protected function _construct()
+    {
+        return $this;
+    }
+
+    protected function _throwException($message, $code = 0, Exception $previous = null)
+    {
         throw new \Funk\SbzImport\Model\Import\Adapter\Exception($message, $code);
     }
-    public function beforePrepare() {
+
+    public function beforePrepare()
+    {
         return $this;
     }
-    public function prepareData(array &$data) {
+
+    public function prepareData(array &$data)
+    {
         return $this;
     }
-    public function afterPrepare() {
+
+    public function afterPrepare()
+    {
         return $this;
     }
-    public function beforeProcess() {
+
+    public function beforeProcess()
+    {
         return $this;
     }
 
@@ -74,14 +86,15 @@ abstract class ClassAbstract
     {
         return $this;
     }
+
     protected function arrayIntersectKeys($array1, $array2)
     {
-      $keys = array_keys($array2);
-      foreach ($array1 as $key => $value) {
-        if (!in_array($key, $keys)) {
-          unset($array1[$key]);
+        $keys = array_keys($array2);
+        foreach ($array1 as $key => $value) {
+            if (!in_array($key, $keys)) {
+                unset($array1[$key]);
+            }
         }
-      }
-      return $array1;
+        return $array1;
     }
 }

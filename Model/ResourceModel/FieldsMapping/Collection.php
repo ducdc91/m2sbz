@@ -11,12 +11,13 @@ class Collection extends AbstractCollection
      * @var string
      */
     protected $_idFieldName = 'id';
+
     /**
      * Remittance File Collection Constructor
      * @return void
      */
     protected function _construct()
     {
-      $this->_init('Funk\SbzImport\Model\FieldsMapping', 'Funk\SbzImport\Model\ResourceModel\FieldsMapping');
+        $this->_init('Funk\SbzImport\Model\FieldsMapping', 'Funk\SbzImport\Model\ResourceModel\FieldsMapping');
     }
 }

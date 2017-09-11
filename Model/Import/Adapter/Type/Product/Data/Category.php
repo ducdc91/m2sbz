@@ -7,50 +7,54 @@
  * @copyright Copyright 2014 FunkExtensions.
  * @version: 0.1.0
  */
+
 namespace Funk\SbzImport\Model\Import\Adapter\Type\Product\Data;
 
 class Category
-  extends \Funk\SbzImport\Model\Import\Adapter\Type\Product\Data\ClassAbstract
+    extends \Funk\SbzImport\Model\Import\Adapter\Type\Product\Data\ClassAbstract
 {
     protected $_category_tree = array();
     protected $_category_product_table;
     //static varible
-    static $CATEGORY_TREE ;
-    static $CATEGORY_PRODUCT_TABLE ;
+    static $CATEGORY_TREE;
+    static $CATEGORY_PRODUCT_TABLE;
+
     /**
      * Initialize base data and config
      */
-    protected function _construct() {
-        if(!isset(self::$CATEGORY_PRODUCT_TABLE)){
-          self::$CATEGORY_PRODUCT_TABLE = $this->_resource->getTableName('catalog_category_product');
+    protected function _construct()
+    {
+        if (!isset(self::$CATEGORY_PRODUCT_TABLE)) {
+            self::$CATEGORY_PRODUCT_TABLE = $this->_resource->getTableName('catalog_category_product');
         }
-        $this->_category_product_table =  self::$CATEGORY_PRODUCT_TABLE ;
+        $this->_category_product_table = self::$CATEGORY_PRODUCT_TABLE;
     }
 
-    protected function _initializeCategoryTree() {
-			if(!isset(self::$CATEGORY_TREE)){
-          $root_category_id = $this->_store->getRootCategoryId();
-          if (!$root_category_id) {
-            $root_category_id = $this->_config->getDefaultWebsite()->getDefaultStore()->getRootCategoryId();
-          }
-          $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-          $storeFactory = $objectManager->create('Magento\Catalog\Model\Category');
+    protected function _initializeCategoryTree()
+    {
+        if (!isset(self::$CATEGORY_TREE)) {
+            $root_category_id = $this->_store->getRootCategoryId();
+            if (!$root_category_id) {
+                $root_category_id = $this->_config->getDefaultWebsite()->getDefaultStore()->getRootCategoryId();
+            }
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $storeFactory = $objectManager->create('Magento\Catalog\Model\Category');
 
-          $root_category = $storeFactory->load($root_category_id);
+            $root_category = $storeFactory->load($root_category_id);
 
 
-          if (is_null($root_category->getId())) {
-            throw new \Funk\SbzImport\Model\Import\Adapter\Exception('Root category not found.');
-          }
+            if (is_null($root_category->getId())) {
+                throw new \Funk\SbzImport\Model\Import\Adapter\Exception('Root category not found.');
+            }
 
-          $collection= $objectManager->create('\Magento\Catalog\Model\ResourceModel\Category\Collection');
-          $collection->addAttributeToSelect(array('name', 'path', 'parent_id'));
-          $collection->addIdFilter($root_category->getChildren());
-          self::$CATEGORY_TREE[$root_category->getName()] = $this->_prepareCategoryTree($root_category, $collection);
-			}
+            $collection = $objectManager->create('\Magento\Catalog\Model\ResourceModel\Category\Collection');
+            $collection->addAttributeToSelect(array('name', 'path', 'parent_id'));
+            $collection->addIdFilter($root_category->getChildren());
+            self::$CATEGORY_TREE[$root_category->getName()] = $this->_prepareCategoryTree($root_category, $collection);
+        }
 
-		  $this->_category_tree = self::$CATEGORY_TREE ;
-      return $this;
+        $this->_category_tree = self::$CATEGORY_TREE;
+        return $this;
     }
 
     protected function _prepareCategoryTree(
@@ -58,7 +62,7 @@ class Category
         \Magento\Catalog\Model\ResourceModel\Category\Collection $collection)
     {
         $child_categories = $collection->getItemsByColumnValue('parent_id', $category->getId());
-        $children        = array();
+        $children = array();
         if (!empty($child_categories)) {
             foreach ($child_categories as $sub_category) {
                 $children[$sub_category->getName()] = $this->_prepareCategoryTree($sub_category, $collection);
@@ -68,12 +72,14 @@ class Category
         return array('category' => $category, 'children' => $children);
     }
 
-    public function beforePrepare() {
+    public function beforePrepare()
+    {
         $this->_initializeCategoryTree();
         return $this;
     }
 
-    public function prepareData(array &$data) {
+    public function prepareData(array &$data)
+    {
         if ($this->_config->getCanCreateCategories()) {
             $this->_prepareCategories($data);
         }
@@ -82,11 +88,12 @@ class Category
     }
 
 
-    public function afterPrepare() {
+    public function afterPrepare()
+    {
         if ($this->_config->getCanCreateCategories()) {
             $this->_writeConnection->beginTransaction();
             try {
-                foreach ($this->_category_tree as $name => $data){
+                foreach ($this->_category_tree as $name => $data) {
                     $this->_saveCategoryTree($this->_category_tree[$name]);
                 }
                 $this->_writeConnection->commit();
@@ -105,7 +112,8 @@ class Category
         return $this;
     }
 
-    public function processData(array &$data) {
+    public function processData(array &$data)
+    {
         try {
             if (isset($data['categories']) && $data['categories'] || isset($data['category_ids']) && $data['category_ids']) {
                 if (isset($data['category_ids']) && $data['category_ids']) {
@@ -118,7 +126,7 @@ class Category
                 }
 
                 if (isset($data['categories']) && $data['categories']) {
-                    $categories  = explode(',', $data['categories']);
+                    $categories = explode(',', $data['categories']);
                     foreach ($categories as $category_path) {
                         foreach ($this->_category_tree as $root_node) {
                             $category_ids = array_merge(
@@ -141,7 +149,7 @@ class Category
                     foreach ($category_ids as $categoryId) {
                         $this->_writeConnection->insertOnDuplicate(
                             $this->_category_product_table,
-                            array('product_id' => $data['product_id'], 'category_id' => $categoryId,'position'=>1)
+                            array('product_id' => $data['product_id'], 'category_id' => $categoryId, 'position' => 1)
                         );
                     }
                 }
@@ -153,9 +161,10 @@ class Category
         return $this;
     }
 
-    protected function _prepareCategories(array &$data) {
+    protected function _prepareCategories(array &$data)
+    {
         if (isset($data['categories']) && $data['categories']) {
-            $categories  = explode(',', $data['categories']);
+            $categories = explode(',', $data['categories']);
             foreach ($categories as $categoryPath) {
                 foreach ($this->_category_tree as $rootCategoryName => $categoryData) {
                     $this->_updateCategoryTree(explode('/', $categoryPath), $this->_category_tree[$rootCategoryName]);
@@ -166,7 +175,8 @@ class Category
         return $this;
     }
 
-    protected function _updateCategoryTree(array $categoryPath, array &$treeNode) {
+    protected function _updateCategoryTree(array $categoryPath, array &$treeNode)
+    {
         if ($categoryName = array_shift($categoryPath)) {
             if (!isset($treeNode['children'][$categoryName])) {
                 $treeNode['children'][$categoryName] = array(
@@ -187,8 +197,8 @@ class Category
             if (is_null($categoryData['category'])) {
                 $category = Mage::getModel('catalog/category');
                 $category->addData(array(
-                    'path'      => $node['category']->getData('path'),
-                    'name'      => $categoryName,
+                    'path' => $node['category']->getData('path'),
+                    'name' => $categoryName,
                     'is_active' => true,
                 ));
                 $category->getResource()->save($category);
@@ -202,11 +212,11 @@ class Category
 
     public function getCategoryPathIds(array $path, array $rootNode)
     {
-        $result      = array();
-        $categories  = $rootNode['children'];
+        $result = array();
+        $categories = $rootNode['children'];
         while ($name = array_shift($path)) {
             if (isset($categories[$name])) {
-                $result[]   = $categories[$name]['category']->getId();
+                $result[] = $categories[$name]['category']->getId();
                 $categories = $categories[$name]['children'];
             }
         }

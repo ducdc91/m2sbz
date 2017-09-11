@@ -7,6 +7,7 @@
  * @copyright Copyright 2014 FunkExtensions.
  * @version: 0.1.0
  */
+
 namespace Funk\SbzImport\Model\Import\Operator;
 
 class Config
@@ -20,9 +21,10 @@ class Config
     )
     {
 
-        $this->_adapter    = $adapter;
+        $this->_adapter = $adapter;
 
     }
+
     public function getAdapter()
     {
         return $this->_adapter;
