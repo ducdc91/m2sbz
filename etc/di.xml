@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Funk\SbzImport\Api\CatalogMappingRepositoryInterface" type="Funk\SbzImport\Model\CatalogMappingRepository"/>
+	<preference for="Funk\SbzImport\Api\Data\CatalogMappingInterface" type="Funk\SbzImport\Model\CatalogMapping"/>
+	<preference for="Funk\SbzImport\Api\Data\CatalogMappingSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	
+	<preference for="Funk\SbzImport\Api\DataTemporaryRepositoryInterface" type="Funk\SbzImport\Model\DataTemporaryRepository"/>
+	<preference for="Funk\SbzImport\Api\Data\DataTemporaryInterface" type="Funk\SbzImport\Model\DataTemporary"/>
+	<preference for="Funk\SbzImport\Api\Data\DataTemporarySearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	
+	<preference for="Funk\SbzImport\Api\FieldsMappingRepositoryInterface" type="Funk\SbzImport\Model\FieldsMappingRepository"/>
+	<preference for="Funk\SbzImport\Api\Data\FieldsMappingInterface" type="Funk\SbzImport\Model\FieldsMapping"/>
+	<preference for="Funk\SbzImport\Api\Data\FieldsMappingSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	
+	<preference for="Funk\SbzImport\Api\KeywordsRepositoryInterface" type="Funk\SbzImport\Model\KeywordsRepository"/>
+	<preference for="Funk\SbzImport\Api\Data\KeywordsInterface" type="Funk\SbzImport\Model\Keywords"/>
+	<preference for="Funk\SbzImport\Api\Data\KeywordsSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	
+	<preference for="Funk\SbzImport\Api\ProductKeywordRepositoryInterface" type="Funk\SbzImport\Model\ProductKeywordRepository"/>
+	<preference for="Funk\SbzImport\Api\Data\ProductKeywordInterface" type="Funk\SbzImport\Model\ProductKeyword"/>
+	<preference for="Funk\SbzImport\Api\Data\ProductKeywordSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+</config>

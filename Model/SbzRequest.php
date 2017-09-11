@@ -259,7 +259,14 @@ class SbzRequest
         $directory = $objectManager->get('Magento\Framework\Filesystem')->getDirectoryWrite(DirectoryList::MEDIA);
 
         $data = file_get_contents($url);
-        $path = $directory->getAbsolutePath('sbz_image') . DIRECTORY_SEPARATOR . $file_name;
+
+        $sbzImgFolder = $directory->getAbsolutePath('sbz_image');
+
+        if (!file_exists($sbzImgFolder)) {
+            mkdir($sbzImgFolder);
+        }
+
+        $path = $sbzImgFolder . DIRECTORY_SEPARATOR . $file_name;
         if (!empty($data)) {
             file_put_contents($path, $data);
             $result = $file_name;
