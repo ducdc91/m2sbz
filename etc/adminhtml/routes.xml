@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="admin">
-        <route id="sbz_import" frontName="sbz_import">
+        <route id="sbzimport" frontName="sbzimport">
             <module name="Funk_SbzImport" before="Magento_Backend"/>
         </route>
     </router>

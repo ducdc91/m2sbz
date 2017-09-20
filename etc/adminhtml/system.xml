@@ -6,7 +6,7 @@
         <tab id="sbzimport" translate="label" sortOrder="15">
             <label>Buchzentrum import</label>
         </tab>
-        <section id="settingSbzImport" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1"
+        <section id="setting_sbz_import" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1"
                  showInStore="1">
             <label>Setting</label>
             <tab>sbzimport</tab>
@@ -19,33 +19,82 @@
                        showInStore="1">
                     <label>Username</label>
                 </field>
-                <field id="password" translate="label" type="text" sortOrder="2" showInDefault="2" showInWebsite="2"
+                <field id="password" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1"
                        showInStore="2">
                     <label>Password</label>
                 </field>
-                <field id="updatestock" translate="label" type="checkbox" sortOrder="3" showInDefault="3"
-                       showInWebsite="3" showInStore="3">
+                <field id="updatestock" translate="label" type="checkbox" sortOrder="3" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
                     <label>Update stock</label>
                 </field>
             </group>
-
-            <group id="category" translate="label" type="text" sortOrder="2" showInDefault="2" showInWebsite="2"
-                   showInStore="2">
+            <group id="filterdata" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Filter Data</label>
+                <field id="export" translate="label" type="Funk\SbzImport\Block\Adminhtml\Form\Field\Export" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Export</label>
+                </field>
+                <field id="import" translate="label" type="Funk\SbzImport\Block\Adminhtml\Form\Field\Import" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Import</label>
+                    <backend_model>Funk\SbzImport\Model\Config\Backend\Keywords</backend_model>
+                </field>
+                <field id="export" translate="label" type="Funk\SbzImport\Block\Adminhtml\Form\Field\Export" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Export</label>
+                </field>
+            </group>
+            <group id="category" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
                 <label>Categories</label>
-                <field id="default_category" translate="label comment" type="select" sortOrder="4" showInDefault="4"
-                       showInWebsite="4" showInStore="4">
+                <field id="default_category" translate="label comment" type="select" sortOrder="4" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
                     <label>Buchzentrum products default category</label>
                     <source_model>Funk\SbzImport\Model\Config\Category\Categories</source_model>
                 </field>
                 <field id="ebooks_dvds_cds_category" translate="label comment" type="select" sortOrder="5"
-                       showInDefault="5" showInWebsite="5" showInStore="5">
+                       showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>E-Books, DVDS, CDS category</label>
                     <source_model>Funk\SbzImport\Model\Config\Category\Categories</source_model>
                 </field>
-                <field id="ebooks_category" translate="label comment" type="select" sortOrder="6" showInDefault="6"
-                       showInWebsite="6" showInStore="6">
+                <field id="ebooks_category" translate="label comment" type="select" sortOrder="6" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
                     <label>E-Books category</label>
                     <source_model>Funk\SbzImport\Model\Config\Category\Categories</source_model>
+                </field>
+            </group>
+            <group id="cronjob" translate="label" type="text" sortOrder="2" showInDefault="2" showInWebsite="2"
+                   showInStore="2">
+                <label>Cronjob configuration</label>
+                <field id="import_product" translate="label comment" type="text" sortOrder="1" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Import Product</label>
+                </field>
+                <field id="import_update_stock" translate="label comment" type="text" sortOrder="2" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Import update stock</label>
+                </field>
+                <field id="import_process_orders" translate="label comment" type="text" sortOrder="3" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Import process orders</label>
+                </field>
+                <field id="import_get_downloads" translate="label comment" type="text" sortOrder="4" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Import get downloads</label>
+                </field>
+                <field id="import_close_orders" translate="label comment" type="text" sortOrder="5" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Import close orders</label>
+                    <comment><![CDATA[
+<pre>
+* * * * *
+| | | | |
+| | | | +---- Day of the Week   (range: 1-7, 1 standing for Monday)
+| | | +------ Month of the Year (range: 1-12)
+| | +-------- Day of the Month  (range: 1-31)
+| +---------- Hour              (range: 0-23)
++------------ Minute            (range: 0-59)
+Example: 0 0 * * * Daily at midnight
+</pre>
+                            ]]></comment>
                 </field>
             </group>
         </section>

@@ -114,7 +114,7 @@ class SbzImport
             $temp_data_model = $objectManager->create('\Funk\SbzImport\Model\DataTemporary');
             $content = $this->flatData($data);
             // download image to sbz_import folder
-
+            $file_name = '';
             $artikelart = $content['Artikelart'];
             if (isset($artikelart) && in_array($artikelart, $allow_download_type)) {
                 $image_id = $content["Titelbild"];

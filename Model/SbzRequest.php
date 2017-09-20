@@ -29,8 +29,8 @@ class SbzRequest
     {
         // get config in backend
         $this->scopeConfig = $scopeConfig;
-        $this->auth_username = $this->scopeConfig->getValue('settingSbzImport/authentication/username', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-        $this->auth_password = $this->scopeConfig->getValue('settingSbzImport/authentication/password', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        $this->auth_username = $this->scopeConfig->getValue('setting_sbz_import/authentication/username', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        $this->auth_password = $this->scopeConfig->getValue('setting_sbz_import/authentication/password', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
         $this->logger = $logger;
         $this->backendSession = $backendSession;
 
