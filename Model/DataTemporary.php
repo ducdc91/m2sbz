@@ -53,6 +53,25 @@ class DataTemporary extends \Magento\Framework\Model\AbstractModel implements Da
     {
         return $this->setData(self::SKU, $sku);
     }
+	
+    /**
+     * Get product_id
+     * @return string
+     */
+    public function getProductId()
+    {
+        return $this->getData(self::PRODUCT_ID);
+    }
+
+    /**
+     * Set product_id
+     * @param string $product_id
+     * @return \Funk\SbzImport\Api\Data\DataTemporaryInterface
+     */
+    public function setProductId($product_id)
+    {
+        return $this->setData(self::PRODUCT_ID, $product_id);
+    }
 
     /**
      * Get data_content

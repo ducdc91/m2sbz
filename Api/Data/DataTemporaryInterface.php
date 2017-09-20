@@ -9,6 +9,7 @@ interface DataTemporaryInterface
     const CREATE_DATE = 'create_date';
     const ENTITY_ID = 'entity_id';
     const SKU = 'sku';
+    const PRODUCT_ID = 'product_id';
     const DATA_CONTENT = 'data_content';
 
     /**
@@ -36,6 +37,19 @@ interface DataTemporaryInterface
      * @return \Funk\SbzImport\Api\Data\DataTemporaryInterface
      */
     public function setSku($sku);
+	
+    /**
+     * Get product_id
+     * @return string|null
+     */
+    public function getProductId();
+
+    /**
+     * Set product_id
+     * @param string $product_id
+     * @return \Funk\SbzImport\Api\Data\DataTemporaryInterface
+     */
+    public function setProductId($product_id);
 
     /**
      * Get data_content

@@ -60,11 +60,17 @@ class InstallSchema implements InstallSchemaInterface
             ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
             'entity_id'
         )->addColumn(
-                'sku',
+			'sku',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             64,
             [],
             'sku'
+        )->addColumn(
+			'product_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+            11,
+            ['unsigned' => true],
+            'product_id'
         )->addColumn(
             'data_content',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
