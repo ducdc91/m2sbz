@@ -42,6 +42,8 @@ class Category
 
             $root_category = $storeFactory->load($root_category_id);
 
+            /** @var $categoryResource Mage_Catalog_Model_Resource_Category */
+            $categoryResource = $root_category->getResource();
 
             if (is_null($root_category->getId())) {
                 throw new \Funk\SbzImport\Model\Import\Adapter\Exception('Root category not found.');
@@ -49,7 +51,7 @@ class Category
 
             $collection = $objectManager->create('\Magento\Catalog\Model\ResourceModel\Category\Collection');
             $collection->addAttributeToSelect(array('name', 'path', 'parent_id'));
-            $collection->addIdFilter($root_category->getChildren());
+            $collection->addIdFilter($categoryResource->getChildren($root_category,true));
             self::$CATEGORY_TREE[$root_category->getName()] = $this->_prepareCategoryTree($root_category, $collection);
         }
 
@@ -217,9 +219,11 @@ class Category
         while ($name = array_shift($path)) {
             if (isset($categories[$name])) {
                 $result[] = $categories[$name]['category']->getId();
+
                 $categories = $categories[$name]['children'];
             }
         }
+
 
         return $result;
     }

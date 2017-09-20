@@ -14,6 +14,8 @@ use Magento\Backend\App\Area\FrontNameResolver;
 
 use Funk\SbzImport\Model\Import\Adpter\Exception;
 use Magento\Framework\App\ObjectManagerFactory;
+use Funk\SbzImport\Model\ProductKeywordFactory;
+use Funk\SbzImport\Model\KeywordsFactory;
 
 class Product extends \Magento\Framework\Model\AbstractModel
 {
@@ -22,6 +24,17 @@ class Product extends \Magento\Framework\Model\AbstractModel
     protected $_supplier_id;
     protected $_objectManager;
     protected $_objectManagerFactory;
+
+    /**
+     * @var ProductKeywordFactory
+     */
+    protected $_productKeywordFactory;
+
+    /**
+     * @var KeywordsFactory
+     */
+    protected $_keywordsFactory;
+
     //static varible
     static $OPERATORS = array();
     static $ADAPTER_CLASS_NAME;
@@ -33,11 +46,15 @@ class Product extends \Magento\Framework\Model\AbstractModel
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        ObjectManagerFactory $objectManagerFactory
+        ObjectManagerFactory $objectManagerFactory,
+        ProductKeywordFactory $productKeywordFactory,
+        KeywordsFactory $keywordsFactory
     )
     {
         $this->_objectManagerFactory = $objectManagerFactory;
         $this->_resource = $resource;
+        $this->_productKeywordFactory = $productKeywordFactory;
+        $this->_keywordsFactory = $keywordsFactory;
     }
 
     public function init()
@@ -121,16 +138,23 @@ class Product extends \Magento\Framework\Model\AbstractModel
         $new_data = array();
 
         if (is_null(self::$FIELDS_MAPPING)) {
-            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            /*$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
             $fields = $objectManager->create('\Funk\SbzImport\Model\ResourceModel\FieldsMapping\Collection');
             foreach ($fields as $field) {
                 self::$FIELDS_MAPPING[$field->getMageField()] = $field->getBszField();
-            }
+            }*/
+            self::$FIELDS_MAPPING = [
+                'sku' => 'Artikel',
+                'price' => 'Preis',
+                'name' => 'Titel',
+                'description' => 'Zusammenfassung',
+            ];
         }
         $new_data["product_id"] = $data["product_id"];
         $new_data["images"] = $data["images"];
         $new_data["qty"] = 100;
-        $new_data["category_ids"] = 38;
+        $new_data["categories"] = $this->getCategoriesBySku($data["sku"]);
+
         foreach (self::$FIELDS_MAPPING as $k => $v) {
             $value = "";
             if (isset($data[$v])) {
@@ -150,6 +174,24 @@ class Product extends \Magento\Framework\Model\AbstractModel
         $adapterClassName = $this->getAdapterClassName();
         $adapterConfig = self::getOperator($attributeCodes);
         return new $adapterClassName($adapterConfig);
+    }
+
+    protected function getCategoriesBySku($sku)
+    {
+
+        $categories = '';
+
+        $productKeyword = $this->_productKeywordFactory->create()->getCollection()->addFieldToFilter('sku', $sku)->getFirstItem();
+
+        $keywordFilter = $productKeyword->getKeyword();
+        $keyword = $this->_keywordsFactory->create()->getCollection()->addFieldToFilter('kwd_id', $keywordFilter)->getFirstItem();
+
+        $mainCategory = $keyword->getMainCategory();
+        $subCategory = $keyword->getSubCategory();
+        if ($mainCategory && $subCategory) {
+            $categories = $mainCategory . '/' . $subCategory;
+        }
+        return $categories;
     }
 
     // make unique key by code
