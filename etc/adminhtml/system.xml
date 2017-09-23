@@ -38,9 +38,6 @@
                     <label>Import</label>
                     <backend_model>Funk\SbzImport\Model\Config\Backend\Keywords</backend_model>
                 </field>
-                <field id="export" translate="label" type="Funk\SbzImport\Block\Adminhtml\Form\Field\Export" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Export</label>
-                </field>
             </group>
             <group id="category" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1"
                    showInStore="1">

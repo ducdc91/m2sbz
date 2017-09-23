@@ -72,6 +72,18 @@ class InstallSchema implements InstallSchemaInterface
             ['unsigned' => true],
             'product_id'
         )->addColumn(
+			'main_category',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            255,
+            [],
+            'main_category'
+        )->addColumn(
+			'sub_category',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            255,
+            [],
+            'sub_category'
+        )->addColumn(
             'data_content',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             '2M',

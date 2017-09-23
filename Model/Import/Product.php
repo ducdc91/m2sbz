@@ -41,7 +41,12 @@ class Product extends \Magento\Framework\Model\AbstractModel
     static $PRODUCT_URL_MODEL;
     static $PRODUCT_TABLE_NAME;
     static $CONNECTION;
-    static $FIELDS_MAPPING;
+    static $FIELDS_MAPPING = [
+        'sku' => 'Artikel',
+        'price' => 'Preis',
+        'name' => 'Titel',
+        'description' => 'Zusammenfassung',
+    ];
 
 
     public function __construct(
@@ -143,17 +148,11 @@ class Product extends \Magento\Framework\Model\AbstractModel
             foreach ($fields as $field) {
                 self::$FIELDS_MAPPING[$field->getMageField()] = $field->getBszField();
             }*/
-            self::$FIELDS_MAPPING = [
-                'sku' => 'Artikel',
-                'price' => 'Preis',
-                'name' => 'Titel',
-                'description' => 'Zusammenfassung',
-            ];
         }
         $new_data["product_id"] = $data["product_id"];
         $new_data["images"] = $data["images"];
         $new_data["qty"] = 100;
-        $new_data["categories"] = $this->getCategoriesBySku($data["sku"]);
+        $new_data["categories"] = $this->getCategoriesBySku($data);
 
         foreach (self::$FIELDS_MAPPING as $k => $v) {
             $value = "";
@@ -176,18 +175,12 @@ class Product extends \Magento\Framework\Model\AbstractModel
         return new $adapterClassName($adapterConfig);
     }
 
-    protected function getCategoriesBySku($sku)
+    protected function getCategoriesBySku($data)
     {
 
         $categories = '';
-
-        $productKeyword = $this->_productKeywordFactory->create()->getCollection()->addFieldToFilter('sku', $sku)->getFirstItem();
-
-        $keywordFilter = $productKeyword->getKeyword();
-        $keyword = $this->_keywordsFactory->create()->getCollection()->addFieldToFilter('kwd_id', $keywordFilter)->getFirstItem();
-
-        $mainCategory = $keyword->getMainCategory();
-        $subCategory = $keyword->getSubCategory();
+        $mainCategory = $data['main_category'];
+        $subCategory = $data['sub_category'];
         if ($mainCategory && $subCategory) {
             $categories = $mainCategory . '/' . $subCategory;
         }

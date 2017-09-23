@@ -72,4 +72,22 @@ class ProductKeyword extends \Magento\Framework\Model\AbstractModel implements P
     {
         return $this->setData(self::KEYWORD, $keyword);
     }
+
+    /**
+     * @return \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
+     */
+    public function getAll(){
+        $joinConditions = 'main_table.keyword = keyword.kwd_id';
+
+        $keyword = $this->getResource()->getTable('funk_sbz_import_keywords');
+
+        $collection = $this->getCollection();
+        $collection->getSelect()->joinLeft(
+            ['keyword' => $keyword],
+            $joinConditions,
+            ['sub_category','main_category']
+        );
+
+        return $collection;
+    }
 }

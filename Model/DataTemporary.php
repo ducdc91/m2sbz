@@ -74,6 +74,44 @@ class DataTemporary extends \Magento\Framework\Model\AbstractModel implements Da
     }
 
     /**
+     * Get main_category
+     * @return string
+     */
+    public function getMainCategory()
+    {
+        return $this->getData(self::MAIN_CATEGORY);
+    }
+
+    /**
+     * Set main_category
+     * @param string $main_category
+     * @return \Funk\SbzImport\Api\Data\DataTemporaryInterface
+     */
+    public function setMainCategory($main_category)
+    {
+        return $this->setData(self::MAIN_CATEGORY, $main_category);
+    }
+
+    /**
+     * Get sub_category
+     * @return string
+     */
+    public function getSubCategory()
+    {
+        return $this->getData(self::SUB_CATEGORY);
+    }
+
+    /**
+     * Set sub_category
+     * @param string $sub_category
+     * @return \Funk\SbzImport\Api\Data\DataTemporaryInterface
+     */
+    public function setSubCategory($sub_category)
+    {
+        return $this->setData(self::SUB_CATEGORY, $sub_category);
+    }
+
+    /**
      * Get data_content
      * @return string
      */

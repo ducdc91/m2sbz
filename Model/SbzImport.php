@@ -15,12 +15,18 @@ class SbzImport
     protected $_product_model;
     protected $_Db;
 
+    /**
+     * @var KeywordsFactory
+     */
+    protected $_keywordsFactory;
+
     public function __construct(
         \Funk\SbzImport\Model\SbzRequest $sbzRequest,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Catalog\Model\CategoryFactory $categoryFactory,
         \Funk\SbzImport\Model\Keywords $keywordModel,
         \Funk\SbzImport\Model\ProductKeyword $productModel,
+        KeywordsFactory $keywordsFactory,
         \Psr\Log\LoggerInterface $logger
     )
     {
@@ -30,6 +36,7 @@ class SbzImport
         $this->_Db = $this->connectionDB();
         $this->_keyword_model = $keywordModel;
         $this->_product_model = $productModel;
+        $this->_keywordsFactory = $keywordsFactory;
         $this->_logger = $logger;
     }
 
@@ -92,7 +99,7 @@ class SbzImport
         $this->_Db->query($sql_empty_temporary_table);
         //2- get sku  base on keywords
         //2.1- get all keywords from db
-        $products = $this->_product_model->getCollection();
+        $products = $this->_product_model->getAll();
         $request = $this->_request;
 
         $allow_download_type = $this->allowedDownloadTypes();
@@ -122,11 +129,18 @@ class SbzImport
                     $file_name = $this->downloadImageFromAPI($image_id);
                 }
             }
+
+            $mainCategory = $product->getMainCategory();
+
+            $subCategory = $product->getSubCategory();
+
             $content['images'] = $file_name;
             $content = serialize($content);
             $temp_data_model->setDataContent($content);
             $temp_data_model->setSku($product->getSku());
             $temp_data_model->setProductId($product_id);
+            $temp_data_model->setMainCategory($mainCategory);
+            $temp_data_model->setSubCategory($subCategory);
             $temp_data_model->setCreateDate(date('Y-m-d H:i:s'));
             $temp_data_model->save();
             $i++;

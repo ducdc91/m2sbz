@@ -46,6 +46,8 @@ class Import extends \Magento\Framework\App\Action\Action
         foreach ($dataCollection as $item) {
             $data = unserialize($item->getDataContent());
             $data["product_id"] = $item->getProductId();
+            $data["main_category"] = $item->getMainCategory();
+            $data["sub_category"] = $item->getSubCategory();
             $this->productImport->import($data);
         }
 

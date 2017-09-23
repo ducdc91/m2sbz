@@ -11,6 +11,8 @@ interface DataTemporaryInterface
     const SKU = 'sku';
     const PRODUCT_ID = 'product_id';
     const DATA_CONTENT = 'data_content';
+    const MAIN_CATEGORY = 'main_category';
+    const SUB_CATEGORY = 'sub_category';
 
     /**
      * Get entity_id
@@ -50,6 +52,32 @@ interface DataTemporaryInterface
      * @return \Funk\SbzImport\Api\Data\DataTemporaryInterface
      */
     public function setProductId($product_id);
+
+    /**
+     * Get main_category
+     * @return string|null
+     */
+    public function getMainCategory();
+
+    /**
+     * Set main_category
+     * @param string $main_category
+     * @return \Funk\SbzImport\Api\Data\DataTemporaryInterface
+     */
+    public function setMainCategory($main_category);
+
+    /**
+     * Get sub_category
+     * @return string|null
+     */
+    public function getSubCategory();
+
+    /**
+     * Set sub_category
+     * @param string $sub_category
+     * @return \Funk\SbzImport\Api\Data\DataTemporaryInterface
+     */
+    public function setSubCategory($sub_category);
 
     /**
      * Get data_content
