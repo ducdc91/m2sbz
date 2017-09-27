@@ -1,10 +1,10 @@
 <?php
 
-namespace Funk\SbzImport\Model;
+namespace Funk\SbzImport\Model\Sbz;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
 
-class SbzRequest
+class Request
 {
 
     private $auth_username;
@@ -79,7 +79,7 @@ class SbzRequest
 
     private function executeRequest($command)
     {
-        $request = new Request($this->api_base_url, implode($this->parameter_separator, $command));
+        $request = new HttpRequest($this->api_base_url, implode($this->parameter_separator, $command));
         $request->execute();
         $response = new \stdClass();
         $response->data = $request->getResponseBody();

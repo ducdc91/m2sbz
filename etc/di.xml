@@ -19,4 +19,16 @@
 	<preference for="Funk\SbzImport\Api\ProductKeywordRepositoryInterface" type="Funk\SbzImport\Model\ProductKeywordRepository"/>
 	<preference for="Funk\SbzImport\Api\Data\ProductKeywordInterface" type="Funk\SbzImport\Model\ProductKeyword"/>
 	<preference for="Funk\SbzImport\Api\Data\ProductKeywordSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	
+	<preference for="Funk\SbzImport\Api\OrderedProductsRepositoryInterface" type="Funk\SbzImport\Model\OrderedProductsRepository"/>
+	<preference for="Funk\SbzImport\Api\Data\OrderedProductsInterface" type="Funk\SbzImport\Model\OrderedProducts"/>
+	<preference for="Funk\SbzImport\Api\Data\OrderedProductsSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	
+	<preference for="Funk\SbzImport\Api\OrdersRepositoryInterface" type="Funk\SbzImport\Model\OrdersRepository"/>
+	<preference for="Funk\SbzImport\Api\Data\OrdersInterface" type="Funk\SbzImport\Model\Orders"/>
+	<preference for="Funk\SbzImport\Api\Data\OrdersSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	
+	<preference for="Funk\SbzImport\Api\ProductsRepositoryInterface" type="Funk\SbzImport\Model\ProductsRepository"/>
+	<preference for="Funk\SbzImport\Api\Data\ProductsInterface" type="Funk\SbzImport\Model\Products"/>
+	<preference for="Funk\SbzImport\Api\Data\ProductsSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
 </config>

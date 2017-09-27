@@ -1,8 +1,8 @@
 <?php
 
-namespace Funk\SbzImport\Model;
+namespace Funk\SbzImport\Model\Sbz;
 
-class Request
+class HttpRequest
 {
     protected $url;
     protected $requestBody;

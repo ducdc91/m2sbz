@@ -78,6 +78,7 @@ class Inventory
             $inventoryData['stock_id'] = \Magento\CatalogInventory\Model\Stock::DEFAULT_STOCK_ID;
         }
         $this->_writeConnection->insertOnDuplicate($this->_stock_item_table, $inventoryData);
+        $data['website_id'][] = $this->_config->getDefaultWebsiteId();
         foreach ($data['website_id'] as $id) {
             $insertData = array(
                 'product_id' => $product_id,

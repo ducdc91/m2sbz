@@ -29,7 +29,7 @@ abstract class ClassAbstract
     static $READCONNECTION;
     static $WRITECONNECTION;
 
-    final public function __construct(\Funk\SbzImport\Model\Import\Adapter\Type\Product\Product $adapter)
+    final public function __construct( $adapter)
     {
         if (!isset(self::$ADAPTER)) {
             self::$ADAPTER = $adapter;

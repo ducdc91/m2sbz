@@ -1,10 +1,10 @@
 <?php
 
-namespace Funk\SbzImport\Model;
+namespace Funk\SbzImport\Model\Sbz;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
 
-class SbzImport
+class Import
 {
     private $_request;
     protected $_logger;
@@ -20,13 +20,19 @@ class SbzImport
      */
     protected $_keywordsFactory;
 
+    /**
+     * @var \Magento\Catalog\Api\ProductRepositoryInterface
+     */
+    protected $_productFactory;
+
     public function __construct(
-        \Funk\SbzImport\Model\SbzRequest $sbzRequest,
+        \Funk\SbzImport\Model\Sbz\Request $sbzRequest,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Catalog\Model\CategoryFactory $categoryFactory,
         \Funk\SbzImport\Model\Keywords $keywordModel,
         \Funk\SbzImport\Model\ProductKeyword $productModel,
-        KeywordsFactory $keywordsFactory,
+        \Funk\SbzImport\Model\KeywordsFactory $keywordsFactory,
+        \Magento\Catalog\Model\ProductFactory $productFactory,
         \Psr\Log\LoggerInterface $logger
     )
     {
@@ -37,6 +43,7 @@ class SbzImport
         $this->_keyword_model = $keywordModel;
         $this->_product_model = $productModel;
         $this->_keywordsFactory = $keywordsFactory;
+        $this->_productFactory = $productFactory;
         $this->_logger = $logger;
     }
 
@@ -62,17 +69,22 @@ class SbzImport
         $request = $this->_request;
         $productType = $this->listProductTypes();
         if ($keywords->count()) {
-
             foreach ($keywords as $keyword) {
                 foreach ($productType as $type) {
                     if ($type['value'] != 'download') {
                         $data = $request->clearResults()->getArticle('sw="' . $keyword->getKeyword() . '"', $type['sbz_code'])->getResults();
                         foreach ($data as $item) {
-                            $product_keyword = $objectManager->create('\Funk\SbzImport\Model\ProductKeyword');
-                            $product_keyword->setSku($item['Artikel']);
-                            $product_keyword->setKeyword($keyword->getKwdId());
-                            $product_keyword->save();
-
+                            $product = $this->loadProductBySku($item['Artikel']);
+                            if($product){
+                                if($product->getId()){
+                                    if(!$product->getCustomAttribute('without_sbzimport') || !$product->getCustomAttribute('without_sbzimport')->getValue()){
+                                        $product_keyword = $objectManager->create('\Funk\SbzImport\Model\ProductKeyword');
+                                        $product_keyword->setSku($item['Artikel']);
+                                        $product_keyword->setKeyword($keyword->getKwdId());
+                                        $product_keyword->save();
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -152,8 +164,13 @@ class SbzImport
     // implement get data from sbzonline.sbz.ch/ site via api and store data to local db
     function execute()
     {
-        //$this->getAndStoreProductSkuByKeyword();
+        $this->getAndStoreProductSkuByKeyword();
         $this->getAllProductFromCloudSystem();
+    }
+
+    public function loadProductBySku($sku)
+    {
+        return $this->_productFactory->create()->loadByAttribute('sku', $sku);
     }
 
     function downloadImageFromAPI($image_id)

@@ -4,5 +4,8 @@
         <job name="sbzimport_import_product" instance="Funk\SbzImport\Cron\Import\Product" method="execute">
             <config_path>setting_sbz_import/cronjob/import_product</config_path>
         </job>
+        <job name="sbzimport_import_update_stock" instance="Funk\SbzImport\Cron\Import\UpdateStock" method="execute">
+            <config_path>setting_sbz_import/cronjob/import_update_stock</config_path>
+        </job>
     </group>
 </config>
