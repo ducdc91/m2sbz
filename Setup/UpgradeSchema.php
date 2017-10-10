@@ -25,10 +25,9 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'entity_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                array('identity' => true,'nullable' => false,'primary' => true,'unsigned' => true,),
+                array('identity' => true, 'nullable' => false, 'primary' => true, 'unsigned' => true,),
                 'Entity ID'
             );
-
 
 
             $table_funk_sbzimport_orderedproducts->addColumn(
@@ -40,35 +39,31 @@ class UpgradeSchema implements UpgradeSchemaInterface
             );
 
 
-
             $table_funk_sbzimport_orderedproducts->addColumn(
                 'product_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['nullable' => False,'unsigned' => true],
+                ['nullable' => False, 'unsigned' => true],
                 'Commerce product id'
             );
-
 
 
             $table_funk_sbzimport_orderedproducts->addColumn(
                 'sbz_order_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['nullable' => False,'unsigned' => true],
+                ['nullable' => False, 'unsigned' => true],
                 'Sbz order id'
             );
-
 
 
             $table_funk_sbzimport_orderedproducts->addColumn(
                 'position',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False,'unsigned' => true],
+                ['default' => '0', 'nullable' => False, 'unsigned' => true],
                 'Position within the sbz order'
             );
-
 
 
             $table_funk_sbzimport_orderedproducts->addColumn(
@@ -78,7 +73,6 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 ['nullable' => False],
                 'Article type (ex.: download)'
             );
-
 
 
             $table_funk_sbzimport_orderedproducts->addColumn(
@@ -105,77 +99,70 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'entity_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                array('identity' => true,'nullable' => false,'primary' => true,'unsigned' => true,),
+                array('identity' => true, 'nullable' => false, 'primary' => true, 'unsigned' => true,),
                 'Entity ID'
             );
-
 
 
             $table_funk_sbzimport_orders->addColumn(
                 'order_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['nullable' => False,'unsigned' => true],
+                ['nullable' => False, 'unsigned' => true],
                 'Order id'
             );
-
 
 
             $table_funk_sbzimport_orders->addColumn(
                 'sbz_order_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False,'unsigned' => true],
+                ['default' => '0', 'nullable' => False, 'unsigned' => true],
                 'Sbz order id'
             );
-
 
 
             $table_funk_sbzimport_orders->addColumn(
                 'has_downloadables',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False,'unsigned' => true],
+                ['default' => '0', 'nullable' => False, 'unsigned' => true],
                 'Indicates whether the order has dowloadable products'
             );
-
 
 
             $table_funk_sbzimport_orders->addColumn(
                 'sbz_released',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False,'unsigned' => true],
+                ['default' => '0', 'nullable' => False, 'unsigned' => true],
                 'Indicates whether the order has been released on sbz'
             );
-
 
 
             $table_funk_sbzimport_orders->addColumn(
                 'sbz_finished',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False,'unsigned' => true],
+                ['default' => '0', 'nullable' => False, 'unsigned' => true],
                 'Indicates whether the processing with sbz has finished for the order'
             );
-
 
 
             $table_funk_sbzimport_orders->addColumn(
                 'sbz_send_attempts',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False,'unsigned' => true],
+                ['default' => '0', 'nullable' => False, 'unsigned' => true],
                 'The number of attempts to send the order to buchzentrum'
             );
-
 
 
             $table_funk_sbzimport_orders->addColumn(
                 'sbz_release_attempts',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False,'unsigned' => true],
+                ['default' => '0', 'nullable' => False, 'unsigned' => true],
                 'The number of attempts to release the order on buchzentrum'
             );
 
@@ -187,20 +174,18 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'entity_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                array('identity' => true,'nullable' => false,'primary' => true,'unsigned' => true,),
+                array('identity' => true, 'nullable' => false, 'primary' => true, 'unsigned' => true,),
                 'Entity ID'
             );
-
 
 
             $table_funk_sbzimport_products->addColumn(
                 'product_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False,'unsigned' => true],
+                ['default' => '0', 'nullable' => False, 'unsigned' => true],
                 'product_id'
             );
-
 
 
             $table_funk_sbzimport_products->addColumn(
@@ -212,15 +197,13 @@ class UpgradeSchema implements UpgradeSchemaInterface
             );
 
 
-
             $table_funk_sbzimport_products->addColumn(
                 'product_display_nid',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False,'unsigned' => true],
+                ['default' => '0', 'nullable' => False, 'unsigned' => true],
                 'product_display_nid'
             );
-
 
 
             $table_funk_sbzimport_products->addColumn(
@@ -232,53 +215,56 @@ class UpgradeSchema implements UpgradeSchemaInterface
             );
 
 
-
             $table_funk_sbzimport_products->addColumn(
                 'import',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '1','nullable' => False],
+                ['default' => '1', 'nullable' => False],
                 'import'
             );
-
 
 
             $table_funk_sbzimport_products->addColumn(
                 'last_update',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False],
+                ['default' => '0', 'nullable' => False],
                 'last_update'
             );
-
 
 
             $table_funk_sbzimport_products->addColumn(
                 'last_update_success',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False],
+                ['default' => '0', 'nullable' => False],
                 'last_update_success'
             );
-
 
 
             $table_funk_sbzimport_products->addColumn(
                 'product_changed',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False],
+                ['default' => '0', 'nullable' => False],
                 'product_changed'
             );
-
 
 
             $table_funk_sbzimport_products->addColumn(
                 'next_stock_update',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 null,
-                ['default' => '0','nullable' => False,'unsigned' => true],
+                ['default' => '0', 'nullable' => False, 'unsigned' => true],
                 'next_stock_update'
+            );
+
+            $table_funk_sbzimport_products->addColumn(
+                'without_sbzimport',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                1,
+                ['default' => '0', 'nullable' => true, 'unsigned' => true],
+                'without_sbzimport'
             );
 
 

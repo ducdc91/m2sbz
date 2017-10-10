@@ -99,6 +99,7 @@ class Import
             $data["sku"] = $item->getSku();
             $data["main_category"] = $item->getMainCategory();
             $data["sub_category"] = $item->getSubCategory();
+            $data["product_type"] =$item->getProductType() ;
             $this->_productImport->import($data);
         }
         $this->reindexSystemData();
@@ -107,9 +108,15 @@ class Import
     private function importStockSetting(){
         $products = $this->getNewStockProducts();
         foreach ($products as $product){
-            $newProduct = $this->_productsFactory->create();
+            $productSku = $product['sku'];
+            $newProduct = $this->_productsFactory->create()->loadBySku($productSku);
             $newProduct->setProductId($product['entity_id']);
             $newProduct->setSku($product['sku']);
+            $productType = '';
+            if($product['keyword'] == 'download'){
+                $productType = 'download';
+            }
+            $newProduct->setProductDbType($productType);
             $this->_productsRepositoryInterface->save($newProduct);
         }
     }
@@ -121,11 +128,12 @@ class Import
         $sql = "
               SELECT
                 m.entity_id,
-                m.sku
+                m.sku,
+                pk.keyword
                 FROM
                 {$productTable} as m
-                INNER JOIN funk_sbz_import_product_keyword ON m.sku = funk_sbz_import_product_keyword.sku 
-                where funk_sbz_import_product_keyword.sku  not in (Select sku from funk_sbz_import_products)
+                INNER JOIN funk_sbz_import_product_keyword as pk ON m.sku = pk.sku 
+                where pk.sku  not in (Select sku from funk_sbz_import_products)
               ";
         $result = $connection->fetchAll($sql);
         return $result;

@@ -49,7 +49,7 @@ class Product
             0 => new \Funk\SbzImport\Model\Import\Adapter\Type\Product\Data\Base($this),
             1 => new \Funk\SbzImport\Model\Import\Adapter\Type\Product\Data\Category($this),
             2 => new \Funk\SbzImport\Model\Import\Adapter\Type\Product\Data\Eav($this),
-            //3 => new \Funk\SbzImport\Model\Import\Adapter\Type\Product\Data\Inventory($this),
+            3 => new \Funk\SbzImport\Model\Import\Adapter\Type\Product\Data\Inventory($this),
             4 => new \Funk\SbzImport\Model\Import\Adapter\Type\Product\Data\Media($this),
         );
         return $this;

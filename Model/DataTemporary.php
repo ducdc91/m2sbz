@@ -131,6 +131,25 @@ class DataTemporary extends \Magento\Framework\Model\AbstractModel implements Da
     }
 
     /**
+     * Get product_type
+     * @return string
+     */
+    public function getProductType()
+    {
+        return $this->getData(self::PRODUCT_TYPE);
+    }
+
+    /**
+     * Set product_type
+     * @param string $product_type
+     * @return \Funk\SbzImport\Api\Data\DataTemporaryInterface
+     */
+    public function setProductType($product_type)
+    {
+        return $this->setData(self::PRODUCT_TYPE, $product_type);
+    }
+
+    /**
      * Get create_date
      * @return string
      */

@@ -16,6 +16,7 @@ interface ProductsInterface
     const ENTITY_ID = 'entity_id';
     const PRODUCT_CHANGED = 'product_changed';
     const NEXT_STOCK_UPDATE = 'next_stock_update';
+    const WITHOUT_SBZIMPORT = 'without_sbzimport';
 
 
     /**
@@ -147,4 +148,18 @@ interface ProductsInterface
      * @return \Funk\SbzImport\Api\Data\ProductsInterface
      */
     public function setNextStockUpdate($next_stock_update);
+
+
+    /**
+     * Get without_sbzimport
+     * @return string
+     */
+    public function getWithoutSbzimport();
+
+    /**
+     * Set without_sbzimport
+     * @param string $without_sbzimport
+     * @return \Funk\SbzImport\Api\Data\ProductsInterface
+     */
+    public function setWithoutSbzimport($without_sbzimport);
 }

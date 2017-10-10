@@ -13,6 +13,7 @@ interface DataTemporaryInterface
     const DATA_CONTENT = 'data_content';
     const MAIN_CATEGORY = 'main_category';
     const SUB_CATEGORY = 'sub_category';
+    const PRODUCT_TYPE = 'product_type';
 
     /**
      * Get entity_id
@@ -91,6 +92,19 @@ interface DataTemporaryInterface
      * @return \Funk\SbzImport\Api\Data\DataTemporaryInterface
      */
     public function setDataContent($data_content);
+
+    /**
+     * Get product_type
+     * @return string
+     */
+    public function getProductType();
+
+    /**
+     * Set product_type
+     * @param string $product_type
+     * @return \Funk\SbzImport\Api\Data\DataTemporaryInterface
+     */
+    public function setProductType($product_type);
 
     /**
      * Get create_date

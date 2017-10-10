@@ -77,17 +77,26 @@ class ProductKeyword extends \Magento\Framework\Model\AbstractModel implements P
      * @return \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
      */
     public function getAll(){
-        $joinConditions = 'main_table.keyword = keyword.kwd_id';
+        $keywordJoinConditions = 'main_table.keyword = keyword.kwd_id';
+        $productJoinConditions = 'main_table.sku = pro.sku';
 
-        $keyword = $this->getResource()->getTable('funk_sbz_import_keywords');
+        $keywordTable = $this->getResource()->getTable('funk_sbz_import_keywords');
+        $productTable = $this->getResource()->getTable('funk_sbz_import_products');
 
         $collection = $this->getCollection();
         $collection->getSelect()->joinLeft(
-            ['keyword' => $keyword],
-            $joinConditions,
+            ['keyword' => $keywordTable],
+            $keywordJoinConditions,
             ['sub_category','main_category']
         );
+        $collection->getSelect()->join(
+            ['pro' => $productTable],
+            $productJoinConditions,
+            ['without_sbzimport','product_db_type']
+        );
 
+        $collection->addFieldToFilter('pro.without_sbzimport',array('neq'=>1));
+        $collection->getSelect()->group(array());
         return $collection;
     }
 }

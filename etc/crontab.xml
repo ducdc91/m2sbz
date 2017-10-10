@@ -7,5 +7,14 @@
         <job name="sbzimport_import_update_stock" instance="Funk\SbzImport\Cron\Import\UpdateStock" method="execute">
             <config_path>setting_sbz_import/cronjob/import_update_stock</config_path>
         </job>
+        <job name="sbzimport_process_orders" instance="Funk\SbzImport\Cron\Order\ProcessOrder" method="execute">
+            <config_path>setting_sbz_import/cronjob/import_process_orders</config_path>
+        </job>
+        <job name="sbzimport_get_downloads" instance="Funk\SbzImport\Cron\Order\GetDownloads" method="execute">
+            <config_path>setting_sbz_import/cronjob/import_get_downloads</config_path>
+        </job>
+        <job name="sbzimport_close_orders" instance="Funk\SbzImport\Cron\Order\CloseOrder" method="execute">
+            <config_path>setting_sbz_import/cronjob/import_close_orders</config_path>
+        </job>
     </group>
 </config>

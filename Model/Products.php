@@ -205,4 +205,27 @@ class Products extends \Magento\Framework\Model\AbstractModel implements Product
     {
         return $this->setData(self::NEXT_STOCK_UPDATE, $next_stock_update);
     }
+
+    /**
+     * Get without_sbzimport
+     * @return string
+     */
+    public function getWithoutSbzimport()
+    {
+        return $this->getData(self::WITHOUT_SBZIMPORT);
+    }
+
+    /**
+     * Set without_sbzimport
+     * @param string $without_sbzimport
+     * @return \Funk\SbzImport\Api\Data\ProductsInterface
+     */
+    public function setWithoutSbzimport($without_sbzimport)
+    {
+        return $this->setData(self::WITHOUT_SBZIMPORT, $without_sbzimport);
+    }
+
+    public function loadBySku($sku){
+        return $this->getCollection()->addFieldToFilter('sku',$sku)->getFirstItem();
+    }
 }

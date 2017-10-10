@@ -74,17 +74,10 @@ class Import
                     if ($type['value'] != 'download') {
                         $data = $request->clearResults()->getArticle('sw="' . $keyword->getKeyword() . '"', $type['sbz_code'])->getResults();
                         foreach ($data as $item) {
-                            $product = $this->loadProductBySku($item['Artikel']);
-                            if($product){
-                                if($product->getId()){
-                                    if(!$product->getCustomAttribute('without_sbzimport') || !$product->getCustomAttribute('without_sbzimport')->getValue()){
-                                        $product_keyword = $objectManager->create('\Funk\SbzImport\Model\ProductKeyword');
-                                        $product_keyword->setSku($item['Artikel']);
-                                        $product_keyword->setKeyword($keyword->getKwdId());
-                                        $product_keyword->save();
-                                    }
-                                }
-                            }
+                            $product_keyword = $objectManager->create('\Funk\SbzImport\Model\ProductKeyword');
+                            $product_keyword->setSku($item['Artikel']);
+                            $product_keyword->setKeyword($keyword->getKwdId());
+                            $product_keyword->save();
                         }
                     }
                 }
@@ -121,6 +114,7 @@ class Import
 
         $i = 0;
         foreach ($products as $product) {
+
             if ($i > 5)
                 break;
             $data = $request->clearResults()->getArticleDetail($product->getSku())->getResults();
@@ -154,6 +148,7 @@ class Import
             $temp_data_model->setMainCategory($mainCategory);
             $temp_data_model->setSubCategory($subCategory);
             $temp_data_model->setCreateDate(date('Y-m-d H:i:s'));
+            $temp_data_model->setProductType($product->getProductDbType());
             $temp_data_model->save();
             $i++;
         }
@@ -164,7 +159,7 @@ class Import
     // implement get data from sbzonline.sbz.ch/ site via api and store data to local db
     function execute()
     {
-        $this->getAndStoreProductSkuByKeyword();
+        //$this->getAndStoreProductSkuByKeyword();
         $this->getAllProductFromCloudSystem();
     }
 

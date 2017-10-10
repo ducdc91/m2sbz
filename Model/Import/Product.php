@@ -94,7 +94,10 @@ class Product extends \Magento\Framework\Model\AbstractModel
         $new_data["product_id"] = $data["product_id"];
         $new_data["images"] = $data["images"];
         $new_data["categories"] = $this->getCategoriesBySku($data);
-
+        $new_data["without_sbzimport"] = 0;
+        if($data["product_type"]=='download'){
+            $new_data["qty"]   =-2;
+        }
         foreach (self::$FIELDS_MAPPING as $k => $v) {
             $value = "";
             if (isset($data[$v])) {

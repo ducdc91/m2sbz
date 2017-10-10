@@ -183,9 +183,16 @@ class Orders extends \Magento\Framework\Model\AbstractModel implements OrdersInt
         return $this->setData(self::SBZ_RELEASE_ATTEMPTS, $sbz_release_attempts);
     }
 
+    public function loadByOrderId($orderId){
+        $collection = $this->getCollection();
+        $collection->addFieldToFilter('order_id',array('eq' => $orderId));
+
+        return $collection->getFirstItem();
+    }
+
     public function getItems(){
         $collection = $this->_orderedProductsFactory->create()->getCollection();
-        $collection->addFieldToFilter('sbz_order_id',array('eq' => $this->getId()));
+        $collection->addFieldToFilter('sbz_order_id',array('eq' => $this->getOrderId()));
 
         return $collection;
     }

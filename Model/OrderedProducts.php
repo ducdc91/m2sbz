@@ -167,4 +167,12 @@ class OrderedProducts extends \Magento\Framework\Model\AbstractModel implements 
     {
         return $this->setData(self::QTY, $qty);
     }
+
+    public function loadByOrderIdAndSku($orderId, $sku){
+        $collection = $this->getCollection();
+        $collection->addFieldToFilter('sbz_order_id',array('eq' => $orderId));
+        $collection->addFieldToFilter('sku',array('eq' => $sku));
+
+        return $collection->getFirstItem();
+    }
 }

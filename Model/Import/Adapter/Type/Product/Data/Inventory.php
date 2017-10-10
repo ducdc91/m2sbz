@@ -67,6 +67,13 @@ class Inventory
     public function processData(array &$data)
     {
         $product_id = $data['product_id'];
+        if(!isset($data["qty"])){
+            return $this;
+        }else{
+            $data["qty"]=0;
+            $data["is_in_stock"]=0;
+            $data["use_config_manage_stock"]=0;
+        }
         if ($data['_is_new']) {
             $inventoryData = $this->arrayIntersectKeys($data, $this->_default_inventory_data);
             $inventoryData = array_merge($this->_default_inventory_data, $inventoryData);

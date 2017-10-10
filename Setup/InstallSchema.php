@@ -90,6 +90,12 @@ class InstallSchema implements InstallSchemaInterface
             [],
             'data_content'
         )->addColumn(
+            'product_type',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            50,
+            ['default' => ''],
+            'product_type'
+        )->addColumn(
             'create_date',
             \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
             null,
