@@ -15,39 +15,6 @@ class InstallSchema implements InstallSchemaInterface
         $installer->startSetup();
 
         /**
-         * Create table 'funk_sbz_import_catalog_mapping'
-         */
-        $setup->getConnection()->dropTable($setup->getTable('funk_sbz_import_catalog_mapping'));
-        $tableImportCatalogMapping = $installer->getConnection()->newTable(
-            $installer->getTable('funk_sbz_import_catalog_mapping')
-        )->addColumn(
-            'entity_id',
-            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-            null,
-            ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
-            'entity_id'
-        )->addColumn(
-            'mage_cat_id',
-            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-            null,
-            ['unsigned' => true],
-            'mage_cat_id'
-        )->addColumn(
-            'sbz_main_category',
-            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-            255,
-            [],
-            'sbz_main_category'
-        )->addColumn(
-            'sbz_sub_category',
-            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-            255,
-            [],
-            'sbz_sub_category'
-        );
-        $installer->getConnection()->createTable($tableImportCatalogMapping);
-
-        /**
          * Create table 'funk_sbz_import_data_tpm'
          */
         $setup->getConnection()->dropTable($setup->getTable('funk_sbz_import_data_tpm'));
@@ -103,34 +70,7 @@ class InstallSchema implements InstallSchemaInterface
             'create_date'
         );
         $installer->getConnection()->createTable($tableImportDataTpm);
-
-        /**
-         * Create table 'funk_sbz_import_fields_mapping'
-         */
-        $setup->getConnection()->dropTable($setup->getTable('funk_sbz_import_fields_mapping'));
-        $tableImportFieldsMapping = $installer->getConnection()->newTable(
-            $installer->getTable('funk_sbz_import_fields_mapping')
-        )->addColumn(
-            'entity_id',
-            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-            null,
-            ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
-            'entity_id'
-        )->addColumn(
-            'mage_field',
-            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-            255,
-            [],
-            'mage_field'
-        )->addColumn(
-            'bsz_field',
-            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-            255,
-            [],
-            'bsz_field'
-        );
-        $installer->getConnection()->createTable($tableImportFieldsMapping);
-
+		
         /**
          * Create table 'funk_sbz_import_keywords'
          */

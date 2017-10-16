@@ -89,13 +89,19 @@ class ProductKeyword extends \Magento\Framework\Model\AbstractModel implements P
             $keywordJoinConditions,
             ['sub_category','main_category']
         );
-        $collection->getSelect()->join(
+        $collection->getSelect()->joinLeft(
             ['pro' => $productTable],
             $productJoinConditions,
             ['without_sbzimport','product_db_type']
         );
 
-        $collection->addFieldToFilter('pro.without_sbzimport',array('neq'=>1));
+        $collection->addFieldToFilter(
+			['pro.without_sbzimport', 'pro.without_sbzimport'],
+			[
+				['null' => true],
+				['neq' => 1]
+			]
+		);
         $collection->getSelect()->group(array());
         return $collection;
     }

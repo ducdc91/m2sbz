@@ -28,34 +28,34 @@ class OrderSaveAfter implements ObserverInterface
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $order    = $observer->getEvent()->getOrder();
-    /*if($order->getState() == 'complete') {*/
-        $isSbzOrderDownload = false;
-        $orderId  = $order->getId();
-        $items = $this->getItemManagedBySbz($orderId);
-        if(count($items)){
-            foreach ($items as $item){
-                $sku            = $item["sku"];
-                $productId      = $item["product_id"];
-                $productType    = $item["product_db_type"];
-                $qty            = $item["qty_ordered"];
+		if($order->getState() == 'complete') {
+			$isSbzOrderDownload = false;
+			$orderId  = $order->getId();
+			$items = $this->getItemManagedBySbz($orderId);
+			if(count($items)){
+				foreach ($items as $item){
+					$sku            = $item["sku"];
+					$productId      = $item["product_id"];
+					$productType    = $item["product_db_type"];
+					$qty            = $item["qty_ordered"];
 
-                $sbzItem = $this->_orderedProductsFactory->create()->loadByOrderIdAndSku($orderId, $sku);
-                $sbzItem->setSku($sku);
-                $sbzItem->setProductId($productId);
-                $sbzItem->setSbzOrderID($orderId);
-                $sbzItem->setProductType($productType);
-                $sbzItem->setQty($qty);
-                $sbzItem->save();
+					$sbzItem = $this->_orderedProductsFactory->create()->loadByOrderIdAndSku($orderId, $sku);
+					$sbzItem->setSku($sku);
+					$sbzItem->setProductId($productId);
+					$sbzItem->setSbzOrderID($orderId);
+					$sbzItem->setProductType($productType);
+					$sbzItem->setQty($qty);
+					$sbzItem->save();
 
-            }
-            $sbzOrder = $this->_ordersFactory->create()->loadByOrderId($orderId);
-            $sbzOrder->setOrderId($orderId);
-          /*  if($isSbzOrderDownload){
-                $sbzOrder->setHasDownloadables(1);
-            }*/
-            $sbzOrder->save();
+				}
+				$sbzOrder = $this->_ordersFactory->create()->loadByOrderId($orderId);
+				$sbzOrder->setOrderId($orderId);
+				/*if($isSbzOrderDownload){
+					$sbzOrder->setHasDownloadables(1);
+				}*/
+				$sbzOrder->save();
+			}
         }
-        /*}*/
     }
     private function getItemManagedBySbz($order_id=0) {
         $order_item_table = $this->_resource->getTableName('sales_order_item');

@@ -1,6 +1,6 @@
 <?php
 
-namespace Funk\SbzImport\Cron\Import;
+namespace Funk\SbzImport\Cron\Order;
 
 
 class GetDownloads

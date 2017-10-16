@@ -17,7 +17,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->startSetup();
-        if ($context->getVersion() && version_compare($context->getVersion(), '1.1.0', '<=')) {
+		if (version_compare($context->getVersion(), '1.2.0') < 0) {
             $table_funk_sbzimport_orderedproducts = $setup->getConnection()->newTable($setup->getTable('funk_sbz_import_ordered_products'));
 
 
